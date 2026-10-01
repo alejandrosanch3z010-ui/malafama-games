@@ -1,0 +1,11 @@
+# Credenciales: nunca se suben
+.env
+
+# Archivos del sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Registros
+*.log
