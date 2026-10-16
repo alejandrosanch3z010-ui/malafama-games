@@ -6,6 +6,12 @@ Archivos: [`database/schema.sql`](../database/schema.sql) crea la base desde cer
 
 ## Diagrama entidad-relación
 
+Diagrama completo con todas las columnas, llaves primarias (PK), foráneas (FK) y únicas (UQ), agrupado por módulo (Catálogo, Usuarios y Ventas):
+
+![Diagrama entidad-relación de Mala Fama Games](diagrama-er.png)
+
+Versión resumida de las relaciones (GitHub la dibuja automáticamente):
+
 ```mermaid
 erDiagram
     GENEROS ||--o{ JUEGOS : "clasifica"
