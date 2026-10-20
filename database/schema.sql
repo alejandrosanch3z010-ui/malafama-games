@@ -41,15 +41,18 @@ CREATE TABLE juegos (
     INDEX idx_juegos_fecha (fecha_lanzamiento)
 );
 
--- Cada juego puede venderse en físico, en digital o en ambos
+-- Cada juego puede venderse en varias versiones (Estándar, Deluxe, Ultimate...)
+-- y cada versión en físico, en digital o en ambos
 CREATE TABLE ediciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     juego_id INT NOT NULL,
+    version VARCHAR(40) NOT NULL DEFAULT 'Estándar',
     formato ENUM('fisico','digital') NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
     precio_oferta DECIMAL(10,2) NULL,
     stock INT NOT NULL DEFAULT 0,
-    UNIQUE (juego_id, formato),
+    incluye VARCHAR(255) NULL,                     -- contenido extra de la versión
+    UNIQUE (juego_id, version, formato),           -- no se repite la misma versión en el mismo formato
     CONSTRAINT fk_edicion_juego FOREIGN KEY (juego_id) REFERENCES juegos(id) ON DELETE CASCADE,
     CONSTRAINT chk_precio CHECK (precio > 0),
     CONSTRAINT chk_oferta CHECK (precio_oferta IS NULL OR (precio_oferta > 0 AND precio_oferta < precio)),
