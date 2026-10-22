@@ -202,6 +202,22 @@ Documentación completa en [`docs/api.md`](docs/api.md).
 | GET | `/api/reportes/ventas?desde=&hasta=` | Administrador, empleado |
 | GET | `/api/historial` | Administrador |
 
+### Cómo probar la API
+
+Con el proyecto corriendo en XAMPP, las consultas públicas se pueden abrir directo en el navegador:
+
+- Lista de juegos: `http://localhost/malafama-games/api/juegos`
+- Búsqueda con paginación: `http://localhost/malafama-games/api/juegos?q=god&page=1&limit=5`
+- Géneros: `http://localhost/malafama-games/api/generos`
+
+La respuesta llega en formato JSON. Para probar las operaciones que modifican datos (`POST`, `PUT`, `PATCH`, `DELETE`) se usa Postman o la consola del navegador:
+
+1. Inicia sesión en la tienda con el usuario que corresponda al permiso del endpoint (ver **Usuarios de prueba**).
+2. Envía la petición con el encabezado `X-CSRF-Token` y la cookie de sesión.
+3. Si el usuario no tiene permiso, la API lo rechaza aunque el botón no aparezca en pantalla, porque los permisos se revisan en el servidor.
+
+Los parámetros, cuerpos y respuestas de cada endpoint están en [`docs/api.md`](docs/api.md).
+
 ## Seguridad
 
 - Contraseñas con **bcrypt** (`password_hash`), nunca en texto plano.
