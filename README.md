@@ -8,7 +8,7 @@ Tienda en línea de videojuegos de **PlayStation 5** (físicos, digitales y tarj
 - **Equipo:** Mala Fama Crew
 - **Tipo de proyecto:** Punto de Venta Personalizado (Proyecto 6)
 - **Sistema publicado:** https://malafamacrew.com _(actualizar con el subdominio final)_
-- **Repositorio:** _(agregar enlace de GitHub)_
+- **Repositorio:** https://github.com/alejandrosanch3z010-ui/malafama-games
 
 ## Integrantes
 
@@ -72,7 +72,7 @@ malafama-games/
 ├── css/                  Estilos
 ├── img/                  Logo, favicon y portadas
 ├── database/             schema.sql, seed.sql e INSTRUCCIONES.md
-├── docs/                 api.md, database.md, git.md
+├── docs/                 api.md, database.md (diccionario de datos), diagrama-er.png, git.md
 ├── admin.php             Panel de administración
 ├── *.php                 Páginas de la tienda
 ├── .htaccess             Envía /api/... al enrutador y protege archivos
@@ -87,13 +87,46 @@ malafama-games/
 
 ## Instalación
 
-1. Copia la carpeta `malafama-games` dentro de `C:\xampp\htdocs\`.
-2. En el panel de XAMPP enciende **Apache** y **MySQL**.
-3. Abre `http://localhost/phpmyadmin` → **Importar** e importa, en este orden:
-   1. `database/schema.sql` (crea la base `malafama_games` desde cero)
-   2. `database/seed.sql` (datos de prueba)
-4. Copia `.env.example` como `.env` y ajusta los datos si tu MySQL tiene contraseña.
-5. Abre `http://localhost/malafama-games`.
+### 1. Obtener el proyecto
+
+Clona el repositorio dentro de `htdocs` (o descarga el ZIP desde GitHub y descomprímelo ahí):
+
+```bash
+cd C:\xampp\htdocs
+git clone https://github.com/alejandrosanch3z010-ui/malafama-games.git
+```
+
+La carpeta debe quedar en `C:\xampp\htdocs\malafama-games`.
+
+### 2. Encender el servidor
+
+En el panel de control de XAMPP enciende **Apache** y **MySQL**. Los dos deben quedar en verde.
+
+### 3. Crear la base de datos
+
+1. Abre `http://localhost/phpmyadmin`.
+2. Pestaña **Importar** → elige `database/schema.sql` → **Importar**. Crea la base `malafama_games` con sus 15 tablas (si ya existía, la borra y la vuelve a crear).
+3. Selecciona la base `malafama_games` → **Importar** → elige `database/seed.sql` → **Importar**. Carga los juegos, usuarios y ventas de prueba.
+
+El orden importa: primero `schema.sql` y después `seed.sql`. Más detalle en [`database/INSTRUCCIONES.md`](database/INSTRUCCIONES.md).
+
+### 4. Configurar el archivo `.env`
+
+En la carpeta del proyecto, copia `.env.example` y renombra la copia a `.env`. Con la configuración normal de XAMPP (usuario `root` sin contraseña) no hay que cambiar nada; si tu MySQL tiene contraseña, escríbela en `DB_PASSWORD`.
+
+### 5. Abrir la tienda
+
+- Tienda: `http://localhost/malafama-games`
+- Panel de administración: `http://localhost/malafama-games/admin.php` (entra con el usuario administrador de la tabla de **Usuarios de prueba**).
+
+### Problemas comunes
+
+| Problema | Solución |
+|---|---|
+| Error de conexión a la base de datos | Revisa que MySQL esté encendido y que los datos del `.env` sean correctos. |
+| La base aparece vacía | Falta importar `seed.sql`, o se importó antes que `schema.sql`. |
+| La API responde 404 | Revisa que el archivo `.htaccess` esté en la carpeta y que Apache tenga activo `mod_rewrite`. |
+| Apache no enciende | Otro programa usa el puerto 80; ciérralo o cambia el puerto en XAMPP.
 
 ## Variables de entorno
 
