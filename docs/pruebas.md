@@ -63,6 +63,25 @@ Registro de las pruebas del sistema. Se ejecutan en local (XAMPP) con la base ca
 | 31 | Archivo .env | Abrir `http://localhost/malafama-games/.env` | El servidor niega el acceso | | Pendiente |
 | 32 | Contraseñas | Revisar la tabla `usuarios` en phpMyAdmin | Las contraseñas están cifradas (hash), no en texto | | Pendiente |
 
+## 6. Pruebas de la API y permisos
+
+Se prueban con el navegador y con Postman (ver la guía del [README](../README.md#cómo-probar-la-api)). En las peticiones que modifican datos se envían la cookie de sesión y el encabezado `X-CSRF-Token`.
+
+| # | Endpoint | Usuario | Resultado esperado | Resultado obtenido | Estado |
+|---|---|---|---|---|---|
+| 33 | `GET /api/juegos` | Sin sesión | Responde la lista de juegos en JSON | | Pendiente |
+| 34 | `GET /api/juegos?q=god&page=1&limit=5` | Sin sesión | Responde solo los que coinciden, máximo 5 | | Pendiente |
+| 35 | `POST /api/juegos` | Sin sesión | La petición se rechaza por falta de sesión | | Pendiente |
+| 36 | `POST /api/juegos` | Cliente | La petición se rechaza por falta de permiso | | Pendiente |
+| 37 | `POST /api/juegos` | Administrador | El juego se crea y queda en el historial | | Pendiente |
+| 38 | `POST /api/juegos` sin `X-CSRF-Token` | Administrador | La petición se rechaza | | Pendiente |
+| 39 | `PATCH /api/pedidos/{id}/estado` | Empleado | El pedido avanza al siguiente estado | | Pendiente |
+| 40 | `POST /api/pedidos/{id}/cancelar` | Empleado | La petición se rechaza: solo el administrador cancela | | Pendiente |
+| 41 | `POST /api/pedidos/{id}/cancelar` | Administrador | El pedido se cancela con su motivo | | Pendiente |
+| 42 | `GET /api/reportes/ventas?desde=&hasta=` | Empleado | Responde las ventas del rango | | Pendiente |
+| 43 | `GET /api/historial` | Empleado | La petición se rechaza: el historial es solo del administrador | | Pendiente |
+| 44 | `GET /api/juegos/999999` | Sin sesión | Responde que el juego no existe, sin mostrar errores internos | | Pendiente |
+
 ## Errores encontrados
 
 | Fecha | Caso | Descripción del error | Corrección (commit) |
